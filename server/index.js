@@ -69,6 +69,7 @@ app.post('/products/', (req, res) => {
   crud.create(params, (err, result) => {
     if (err) {
       console.log('POST ERROR', err);
+      res.status(500);
     } else {
       res.send(result);
     }
@@ -78,7 +79,7 @@ app.get('/newproducts/:id', (req, res) => {
   const params = req.params.id;
   crud.read(params, (err, result) => {
     if (err) {
-      res.send('GET ERROR', err);
+      res.status(500).send('GET ERROR', err);
     } else {
       res.send(result);
     }
@@ -88,7 +89,7 @@ app.patch('/products/:id', (req, res) => {
   const params = Object.values(req.body);
   crud.update(params, (err, result) => {
     if (err) {
-      res.send('UPDATE ERROR', err);
+      res.status(500).send('UPDATE ERROR', err);
     } else {
       res.send(result);
     }
@@ -98,7 +99,7 @@ app.delete('/products/:id', (req, res) => {
   const params = req.params.id;
   crud.delete(params, (err, result) => {
     if (err) {
-      res.send('DELETE ERROR', err);
+      res.status(500).send('DELETE ERROR', err);
     } else {
       res.send(result);
     }
