@@ -8,7 +8,7 @@ const port = 4000;
 
 app.use(express.static(path.join(__dirname, '/../dist')));
 app.use('/:id', express.static('dist'));
-
+app.use(express.json());
 app.listen(`${port}`, () => {
   console.log(`Running on port ${port}!`);
 });
@@ -64,41 +64,41 @@ app.get('/get/random', (req, res) => {
   });
 });
 
-app.post('/product/', (req, res) => {
-  const params = req.data;
+app.post('/products/', (req, res) => {
+  const params = Object.values(req.body);
   crud.create(params, (err, result) => {
     if (err) {
-      res.send('POST ERROR', err);
+      console.log('POST ERROR', err);
     } else {
       res.send(result);
     }
   });
 });
-app.get('/product/:id', (req, res) => {
-  const params = req.data;
+app.get('/newproducts/:id', (req, res) => {
+  const params = req.params.id;
   crud.read(params, (err, result) => {
     if (err) {
-      res.send('POST ERROR', err);
+      res.send('GET ERROR', err);
     } else {
       res.send(result);
     }
   });
 });
-app.patch('/product/:id', (req, res) => {
-  const params = req.data;
+app.patch('/products/:id', (req, res) => {
+  const params = Object.values(req.body);
   crud.update(params, (err, result) => {
     if (err) {
-      res.send('POST ERROR', err);
+      res.send('UPDATE ERROR', err);
     } else {
       res.send(result);
     }
   });
 });
-app.delete('/product/:id', (req, res) => {
-  const params = req.data;
+app.delete('/products/:id', (req, res) => {
+  const params = req.params.id;
   crud.delete(params, (err, result) => {
     if (err) {
-      res.send('POST ERROR', err);
+      res.send('DELETE ERROR', err);
     } else {
       res.send(result);
     }
