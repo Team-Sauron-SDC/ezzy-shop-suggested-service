@@ -1,6 +1,7 @@
 const express = require('express');
-const api = require('./api.js');
 const path = require('path');
+const api = require('./api.js');
+const crud = require('./crud');
 
 const app = express();
 const port = 4000;
@@ -57,6 +58,47 @@ app.get('/get/random', (req, res) => {
   api.get6Random((err, result) => {
     if (err) {
       console.error(`There was an error getting 6 random from database: ${err}`);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post('/product/', (req, res) => {
+  const params = req.data;
+  crud.create(params, (err, result) => {
+    if (err) {
+      res.send('POST ERROR', err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+app.get('/product/:id', (req, res) => {
+  const params = req.data;
+  crud.read(params, (err, result) => {
+    if (err) {
+      res.send('POST ERROR', err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+app.patch('/product/:id', (req, res) => {
+  const params = req.data;
+  crud.update(params, (err, result) => {
+    if (err) {
+      res.send('POST ERROR', err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+app.delete('/product/:id', (req, res) => {
+  const params = req.data;
+  crud.delete(params, (err, result) => {
+    if (err) {
+      res.send('POST ERROR', err);
     } else {
       res.send(result);
     }
