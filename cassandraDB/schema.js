@@ -101,10 +101,4 @@ const seed = () => connectAndCreate()
   })
   .catch((err) => console.log('seed error', err));
 
-// seed();
-
-dataGen(writeData, 'utf-8', () => {
-  writeData.end();
-  const ending = new Date().getTime() - start.getTime();
-  console.log(`Seeding Complete! It took: ${Math.floor(ending / 60000)}m and ${((ending % 60000) / 1000).toFixed(0)}secs`);
-});
+seed();
