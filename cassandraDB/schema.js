@@ -1,4 +1,8 @@
 const cassandra = require('cassandra-driver');
+const csvWriter = require('csv-write-stream');
+const fs = require('fs');
+
+const writer = csvWriter();
 const faker = require('faker');
 
 const tempClient = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'system' });
@@ -33,32 +37,30 @@ const seedDB = (id) => {
     productName: faker.commerce.productName(),
     productPrice: faker.commerce.price(),
     productShipping: faker.random.boolean() ? 'FREE Shipping' : 'Free Shipping Eligible',
-    productUrl: faker.image.cats(),
+    productURL: faker.image.cats(),
   };
   return data;
 };
 
-const save = (data) => {
-  client.connect()
-    .then(() => Object.values(data))
-    .then((params) => {
-      console.log('params: ', params);
-      const query = 'INSERT INTO sauron_sdc.products_by_shop (shopID, shopName, shopDate, shopSales, shopLoc, shopURL, shopItems, productID, productName, productPrice, productShipping, productURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-      client.execute(query, params, { prepare: true });
-    })
-    .catch((err) => console.log('made a booboo', err));
+const save = () => {
+  const query = 'COPY sauron_sdc.products_by_shop (shopID, shopName, shopDate, shopSales, shopLoc, shopURL, shopItems, productID, productName, productPrice, productShipping, productURL) FROM "./data.csv" WITH header=true AND delimiter=","';
+
+  client.execute(query);
+  console.log('copied');
 };
 
-const seed = (num = 10) => {
-  for (let id = 0; id < num; id++) {
-    const data = seedDB(id);
-    save(data);
+const dataGen = () => {
+  writer.pipe(fs.createWriteStream('data.csv'));
+  for (let i = 0; i < 10000000; i += 1) {
+    writer.write(seedDB(i));
   }
+  writer.end();
+  console.log('done');
 };
 
-const connectAndSeed = (async () => {
+const seed = async () => {
   await connectAndCreate();
-  await seed();
-});
-
-connectAndSeed();
+  await dataGen();
+};
+// /home/hieuho/Hack Reactor/sdc/suggested-module/data.csv
+seed();
