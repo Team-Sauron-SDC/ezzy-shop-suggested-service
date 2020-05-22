@@ -1,11 +1,8 @@
 const cassandra = require('cassandra-driver');
-const path = require('path');
 const fs = require('fs');
-
 const faker = require('faker');
 
 const tempClient = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'system' });
-
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
 
 const connectAndCreate = () => tempClient.connect()
@@ -21,39 +18,20 @@ const connectAndCreate = () => tempClient.connect()
 
     return client.execute(createTable);
   })
-  .catch((err) => console.log('Connection ERROR', err));
+  .catch((err) => console.log('Cannot Connect to Cassandra!', err));
 
-const seedDB = (id) => {
-  const data = {
-    shopID: id,
-    shopName: faker.company.companyName(0),
-    shopDate: faker.date.recent().toString(),
-    shopSales: faker.random.number(50000),
-    shopLoc: `${faker.address.city()}, ${faker.address.state()}`,
-    shopURL: faker.image.avatar(),
-    shopItems: faker.random.number(1000),
-    productID: id,
-    productName: faker.commerce.productName(),
-    productPrice: faker.commerce.price(),
-    productShipping: faker.random.boolean() ? 'FREE Shipping' : 'Free Shipping Eligible',
-    productURL: faker.image.cats(),
-  };
-  return data;
-};
-// COPY is a command of the shell cqlsh. COPY does not exist in standard syntax
+// COPY is a command of the shell cqlsh. COPY does not exist in standard syntax.
 /*
 const save = () => {
   const query = 'COPY sauron_sdc.products_by_shop (shopID, shopName, shopDate, shopSales, shopLoc, shopURL, shopItems, productID, productName, productPrice, productShipping, productURL) FROM ? WITH header=true AND delimiter=?';
-  const params = ['/home/hieuho/Hack Reactor/sdc/suggested-module/data.csv', ','];
+  const params = [' ', ','];
   client.execute(query, params);
-  console.log('copied');
+  console.log('Copy to Cassandra Completed!');
 };
 */
 
 const start = new Date();
-const writeData = fs.createWriteStream('data.csv', {
-  flags: 'w',
-});
+const writeData = fs.createWriteStream('data.csv');
 writeData.write('shopID, shopName, shopDate, shopSales, shopLoc, shopURL, shopItems, productID, productName, productPrice, productShipping, productURL\n', 'utf8');
 
 const dataGen = (writer, encoding, callback) => {
@@ -96,9 +74,9 @@ const seed = () => connectAndCreate()
     dataGen(writeData, 'utf-8', () => {
       writeData.end();
       const ending = new Date().getTime() - start.getTime();
-      console.log(`Seeding Complete! It took: ${Math.floor(ending / 60000)}m and ${((ending % 60000) / 1000).toFixed(0)}secs`);
+      console.log(`Seeding Completed! It took: ${Math.floor(ending / 60000)}mins and ${((ending % 60000) / 1000).toFixed(0)}secs`);
     });
   })
-  .catch((err) => console.log('seed error', err));
+  .catch((err) => console.log('Connection or Seeding Error!', err));
 
 seed();
