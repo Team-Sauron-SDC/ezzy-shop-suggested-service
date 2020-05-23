@@ -40,13 +40,13 @@ const dataGen = (writer, encoding, callback) => {
   write();
 };
 
-dataGen(writeData, 'utf-8', () => {
-  writeData.end();
-  const ending = new Date().getTime() - start.getTime();
-  console.log(`Seeding Completed! It took: ${Math.floor(ending / 60000)}mins and ${((ending % 60000) / 1000).toFixed(0)}secs`);
-});
+// dataGen(writeData, 'utf-8', () => {
+//   writeData.end();
+//   const ending = new Date().getTime() - start.getTime();
+//   console.log(`Seeding Completed! It took: ${Math.floor(ending / 60000)}mins and ${((ending % 60000) / 1000).toFixed(0)}secs`);
+// });
 
-exports.default = {
+module.exports = {
   dataGen,
   writeData,
   start,
