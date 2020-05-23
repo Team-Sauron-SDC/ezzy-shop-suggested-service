@@ -6,7 +6,7 @@ const writeData = fs.createWriteStream('data.csv');
 writeData.write('shopID, shopName, shopDate, shopSales, shopLoc, shopURL, shopItems, productID, productName, productPrice, productShipping, productURL\n', 'utf8');
 
 const dataGen = (writer, encoding, callback) => {
-  let i = 10000000;
+  let i = 10;
   let id = 0;
   function write() {
     let ok = true;
@@ -40,13 +40,13 @@ const dataGen = (writer, encoding, callback) => {
   write();
 };
 
-dataGen(writeData, 'utf-8', () => {
-  writeData.end();
-  const ending = new Date().getTime() - start.getTime();
-  console.log(`Seeding Completed! It took: ${Math.floor(ending / 60000)}mins and ${((ending % 60000) / 1000).toFixed(0)}secs`);
-});
+// dataGen(writeData, 'utf-8', () => {
+//   writeData.end();
+//   const ending = new Date().getTime() - start.getTime();
+//   console.log(`Seeding Completed! It took: ${Math.floor(ending / 60000)}mins and ${((ending % 60000) / 1000).toFixed(0)}secs`);
+// });
 
-exports.default = {
+module.exports = {
   dataGen,
   writeData,
   start,
