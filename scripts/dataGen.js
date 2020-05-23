@@ -6,7 +6,7 @@ const writeData = fs.createWriteStream('data.csv');
 writeData.write('shopID, shopName, shopDate, shopSales, shopLoc, shopURL, shopItems, productID, productName, productPrice, productShipping, productURL\n', 'utf8');
 
 const dataGen = (writer, encoding, callback) => {
-  let i = 10;
+  let i = 10000000;
   let id = 0;
   function write() {
     let ok = true;

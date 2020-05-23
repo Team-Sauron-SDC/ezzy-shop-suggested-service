@@ -13,7 +13,7 @@ const connectAndCreate = () => tempClient.connect()
     client.connect((err) => (err ? console.log('There was an ERROR', err) : console.log('Connected to Cassandra!')));
   })
   .then(() => {
-    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.products_by_shop (shopID int, shopName text, shopDate text, shopSales int, shopLoc text, shopURL text, shopItems int, productID int, productName text, productPrice text, productShipping text, productUrl text, PRIMARY KEY(shopID, productID))';
+    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.products_by_shop (shopID int, shopName text, shopDate text, shopSales int, shopLoc text, shopURL text, shopItems int, productID int, productName text, productPrice text, productShipping text, productUrl text, PRIMARY KEY(shopID, productID)) WITH CLUSTERING ORDER BY (productID ASC);';
 
     return client.execute(createTable);
   })
@@ -23,7 +23,7 @@ const connectAndCreate = () => tempClient.connect()
 /*
 const save = () => {
   const query = 'COPY sauron_sdc.products_by_shop (shopID, shopName, shopDate, shopSales, shopLoc, shopURL, shopItems, productID, productName, productPrice, productShipping, productURL) FROM ? WITH header=true AND delimiter=?';
-  const params = [' ', ','];
+  const params = ['/home/hieuho/Hack Reactor/sdc/suggested-module/data.csv', ','];
   client.execute(query, params);
   console.log('Copy to Cassandra Completed!');
 };
