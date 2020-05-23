@@ -16,7 +16,7 @@ try {
 }
 
 const Product = sequelize.define('mydb', {
-  shopID: { type: DataTypes.INTEGER },
+  shopID: { type: DataTypes.INTEGER, primaryKey: true },
   shopName: { type: DataTypes.STRING },
   shopDate: { type: DataTypes.STRING },
   shopSales: { type: DataTypes.INTEGER },
@@ -28,7 +28,7 @@ const Product = sequelize.define('mydb', {
   productPrice: { type: DataTypes.STRING },
   productShipping: { type: DataTypes.STRING },
   productURL: { type: DataTypes.STRING },
-});
+}, { timestamps: false });
 
 Product.sync({ alter: true });
 
