@@ -1,5 +1,5 @@
 const cassandra = require('cassandra-driver');
-const seedDB = require('../scripts/dataGen');
+const seed = require('../scripts/dataGen');
 
 const tempClient = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'system' });
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
@@ -29,14 +29,14 @@ const save = () => {
 };
 */
 
-const seed = () => connectAndCreate()
+const doAll = () => connectAndCreate()
   .then(() => {
-    seedDB.dataGen(seedDB.writeData, 'utf-8', () => {
-      seedDB.writeData.end();
-      const ending = new Date().getTime() - seedDB.start.getTime();
+    seed.dataGen(seed.writeData, 'utf-8', () => {
+      seed.writeData.end();
+      const ending = new Date().getTime() - seed.start.getTime();
       console.log(`Seeding Completed! It took: ${Math.floor(ending / 60000)}mins and ${((ending % 60000) / 1000).toFixed(0)}secs`);
     });
   })
   .catch((err) => console.log('Connection or Seeding Error!', err));
 
-seed();
+doAll();
