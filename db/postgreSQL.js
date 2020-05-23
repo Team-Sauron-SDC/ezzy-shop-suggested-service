@@ -34,11 +34,6 @@ const Product = sequelize.define('products', {
 }, { timestamps: false });
 
 const doAll = () => Product.sync()
-  .then(() => {
-    seed.dataGen(seed.writeData, 'utf-8', () => {
-      seed.writeData.end();
-    });
-  })
   .then(() => pgProduct.query("COPY products FROM '/home/hieuho/Hack Reactor/sdc/suggested-module/data.csv' DELIMITER ',' CSV HEADER"))
   .then(() => {
     const ending = new Date().getTime() - seed.start.getTime();
@@ -46,4 +41,9 @@ const doAll = () => Product.sync()
   })
   .catch((err) => console.log('Connection or Seeding Error', err));
 
-doAll();
+const getShop = (id) => Product.findAll({ where: { shopID: id } });
+
+module.exports = {
+  doAll,
+  getShop,
+};
