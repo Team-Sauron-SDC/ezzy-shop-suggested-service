@@ -17,7 +17,7 @@ const dataGen = (writer, encoding, callback) => {
       const shopName = faker.company.companyName(0);
       const shopDate = faker.date.recent().toString();
       const shopSales = faker.random.number(50000);
-      const shopLoc = faker.fake('{{address.city}}, {{address.state}}');
+      const shopLoc = faker.address.city();
       const shopURL = faker.image.avatar();
       const shopItems = faker.random.number(1000);
       const productID = id;
