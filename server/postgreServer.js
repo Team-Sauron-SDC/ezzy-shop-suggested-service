@@ -12,7 +12,7 @@ app.listen(`${port}`, () => {
 });
 
 app.get('/postgres/:id', (req, res) => {
-  const params = req.params.id;
+  const params = req.params.id.split(',').map(Number);
   return postgres.getShop(params)
     .then((result) => res.send(result))
     .catch((err) => res.status(500).send('GET ERROR', err))
