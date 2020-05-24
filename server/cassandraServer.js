@@ -15,6 +15,6 @@ app.get('/cassandra/:id', (req, res) => {
   const params = req.params.id;
   return cassandra.getShop(params)
     .then((result) => res.send(result.rows))
-    .catch((err) => res.status(500).send('GET ERROR', err))
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.code}`))
     .finally(() => res.end());
 });

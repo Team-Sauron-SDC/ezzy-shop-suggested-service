@@ -38,8 +38,10 @@ const doAll = () => Product.sync()
   .catch((err) => console.log('Connection or Seeding Error', err));
 
 const getShop = (id) => Product.findAll({ where: { shopID: id } });
+const get8 = (id) => Product.findAll({ attributes: ['productName', 'productPrice', 'productShipping', 'productShipping'], where: { shopID: id } });
 
 module.exports = {
   doAll,
   getShop,
+  get8,
 };
