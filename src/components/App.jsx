@@ -9,7 +9,7 @@ function App() {
 
   const obj = [];
   for (let i = 0; i < 8; i ++) {
-    obj.push({id: 1, name: "Loading...", price: "Loading...", shipping: "Loading...", shop_id: 1, image_url: "Loading..."});
+    obj.push({productID: 1, productName: "Loading...", productPrice: "Loading...", productShipping: "Loading...", shopID: 1, productURL: "Loading..."});
   }
 
   const [shopInfoData, updateShopInfoData] = useState('test')
@@ -31,9 +31,10 @@ function App() {
       method: 'GET',
       url: `/products/${id}`,
       success: function(result) {
-        var products = JSON.parse(result[0]);
-        var shops = JSON.parse(result[1]);
-        var randomItems = JSON.parse(result[2]);
+        console.log('result: ', result);
+        var products = result[0];
+        var shops = result[0];
+        var randomItems = result[1];
         updateBasicInfo(products, shops, randomItems);
       },
       error: function(err) {
@@ -48,14 +49,14 @@ function App() {
 
   function updateBasicInfo(products, shops, randomProductItems) {
     updateShopInfoData({
-      productsName: products[0].name,
-      imgUrl: products[0].image_url,
-      shopName: shops[0].name,
-      date: shops[0].date,
-      sales: shops[0].sales,
-      location: shops[0].location,
-      profileImgUrl: shops[0].profile_img_url,
-      numOfItems: shops[0].items
+      productsName: products.productName,
+      imgUrl: products.productURL,
+      shopName: shops.shopName,
+      date: shops.shopDate.substring(12, 16),
+      sales: shops.shopSales,
+      location: shops.shopLoc,
+      profileImgUrl: shops.shopURL,
+      numOfItems: shops.shopItems
     });
     updateRandomItems(randomProductItems);
   }

@@ -6,12 +6,13 @@ const app = express();
 const port = 4000;
 
 app.use(express.static(path.join(__dirname, '/dist')));
+app.use('/:id', express.static('dist'));
 app.use(express.json());
 app.listen(`${port}`, () => {
   console.log(`PostgreSQL Server Listening on ${port}!`);
 });
 
-app.get('/postgres/:id', (req, res) => {
+app.get('/products/:id', (req, res) => {
   const params = req.params.id.split(',').map(Number);
   let data;
   postgres.getShop(params)
@@ -23,7 +24,7 @@ app.get('/postgres/:id', (req, res) => {
     .then((result) => {
       data = data.concat([result]);
       res.send(data);
+      res.end();
     })
-    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
-    .finally(() => res.end());
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`));
 });
