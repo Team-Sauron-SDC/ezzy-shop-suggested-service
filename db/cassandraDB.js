@@ -1,5 +1,4 @@
 const cassandra = require('cassandra-driver');
-const seed = require('../scripts/dataGen');
 
 const tempClient = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'system' });
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
@@ -30,13 +29,16 @@ const save = () => {
 */
 
 const doAll = () => connectAndCreate()
-  .then(() => {
-    seed.dataGen(seed.writeData, 'utf-8', () => {
-      seed.writeData.end();
-      const ending = new Date().getTime() - seed.start.getTime();
-      console.log(`Seeding Completed! It took: ${Math.floor(ending / 60000)}mins and ${((ending % 60000) / 1000).toFixed(0)}secs`);
-    });
-  })
+  // .then(() => save())
+  .then(() => console.log('Success!'))
   .catch((err) => console.log('Connection or Seeding Error!', err));
 
-doAll();
+const getShop = (id) => {
+  const query = `SELECT * FROM sauron_sdc.products_by_shop WHERE shopID = ${id}`;
+  return client.execute(query);
+};
+
+module.exports = {
+  doAll,
+  getShop,
+};
