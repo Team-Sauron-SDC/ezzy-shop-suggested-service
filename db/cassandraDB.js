@@ -8,10 +8,9 @@ const connectAndCreate = () => tempClient.connect()
     const create = "CREATE KEYSPACE IF NOT EXISTS sauron_sdc WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : '1' }AND DURABLE_WRITES =  true;";
     return tempClient.execute(create);
   })
+  .then(() => client.connect())
   .then(() => {
-    client.connect((err) => (err ? console.log('There was an ERROR', err) : console.log('Connected to Cassandra!')));
-  })
-  .then(() => {
+    console.log('Connected to Cassandra!');
     const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.products_by_shop (shopID int, shopName text, shopDate text, shopSales int, shopLoc text, shopURL text, shopItems int, productID int, productName text, productPrice text, productShipping text, productUrl text, PRIMARY KEY(shopID, productID)) WITH CLUSTERING ORDER BY (productID ASC);';
 
     return client.execute(createTable);
@@ -30,7 +29,7 @@ const save = () => {
 
 const doAll = () => connectAndCreate()
   // .then(() => save())
-  .then(() => console.log('Success!'))
+  .then(() => console.log('Cassandra ready for actions!'))
   .catch((err) => console.log('Connection or Seeding Error!', err));
 
 const getShop = (id) => client.execute(`SELECT * FROM sauron_sdc.products_by_shop WHERE shopID IN (${id})`);

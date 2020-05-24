@@ -1,6 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { Pool } = require('pg');
-const seed = require('../scripts/dataGen.js');
 
 const pgProduct = new Pool({
   user: 'hieuho',
@@ -35,10 +34,7 @@ const Product = sequelize.define('products', {
 
 const doAll = () => Product.sync()
   .then(() => pgProduct.query("COPY products FROM '/home/hieuho/Hack Reactor/sdc/suggested-module/data.csv' DELIMITER ',' CSV HEADER"))
-  .then(() => {
-    const ending = new Date().getTime() - seed.start.getTime();
-    return console.log(`Seeding Completed! It took: ${Math.floor(ending / 60000)}mins and ${((ending % 60000) / 1000).toFixed(0)}secs`);
-  })
+  .then(() => console.log('PostgreSQL ready for actions!'))
   .catch((err) => console.log('Connection or Seeding Error', err));
 
 const getShop = (id) => Product.findAll({ where: { shopID: id } });
