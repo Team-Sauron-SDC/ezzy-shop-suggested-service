@@ -14,7 +14,7 @@ app.listen(`${port}`, () => {
 app.get('/cassandra/:id', (req, res) => {
   const params = req.params.id;
   return cassandra.getShop(params)
-    .then((result) => res.send(result.rows[0]))
+    .then((result) => res.send(result.rows))
     .catch((err) => res.status(500).send('GET ERROR', err))
     .finally(() => res.end());
 });

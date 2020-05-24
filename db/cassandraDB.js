@@ -33,10 +33,7 @@ const doAll = () => connectAndCreate()
   .then(() => console.log('Success!'))
   .catch((err) => console.log('Connection or Seeding Error!', err));
 
-const getShop = (id) => {
-  const query = `SELECT * FROM sauron_sdc.products_by_shop WHERE shopID = ${id}`;
-  return client.execute(query);
-};
+const getShop = (id) => client.execute(`SELECT * FROM sauron_sdc.products_by_shop WHERE shopID IN (${id})`);
 
 module.exports = {
   doAll,
