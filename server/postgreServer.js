@@ -13,10 +13,17 @@ app.listen(`${port}`, () => {
 
 app.get('/postgres/:id', (req, res) => {
   const params = req.params.id.split(',').map(Number);
-  const data = [];
-  return postgres.getShop(params)
-    // .then((result) => data.push(result))
-    .then((result) => res.send(result))
+  let data;
+  postgres.getShop(params)
+    .then((result) => {
+      data = result;
+      const random8 = Array.from({ length: 8 }, () => Math.floor(Math.random() * 1000));
+      return postgres.get8(random8);
+    })
+    .then((result) => {
+      data = data.concat([result]);
+      res.send(data);
+    })
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
     .finally(() => res.end());
 });
