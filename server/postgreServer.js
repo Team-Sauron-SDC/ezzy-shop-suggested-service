@@ -37,7 +37,7 @@ app.get('/get/random', (req, res) => {
     .finally(() => res.end());
 });
 
-app.post('/createShop', (req, res) => {
+app.post('/products/:id', (req, res) => {
   const newShop = res.body;
   postgres.createShop(newShop)
     .then((result) => res.send(result))
