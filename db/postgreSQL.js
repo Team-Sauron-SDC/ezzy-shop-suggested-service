@@ -42,7 +42,7 @@ const get8 = (id) => Product.findAll({ attributes: ['productName', 'productPrice
 const getSuggested = (id) => Product.findAll({ attributes: ['shopName', 'productName', 'productPrice', 'productShipping', 'productURL'], where: { shopID: id } });
 
 const createShop = (product) => Product.create(product);
-const updateShop = (product) => Product.update(product.info, { where: product.id });
+const updateShop = (product) => Product.update(product.info, { where: { shopID: product.id } });
 const deleteShop = (id) => Product.destroy({ where: { shopID: id } });
 
 module.exports = {

@@ -33,5 +33,6 @@ app.get('/get/random', (req, res) => {
   const suggested = Array.from({ length: 6 }, () => Math.floor(Math.random() * 1000));
   cassandra.getSuggested(suggested)
     .then((result) => res.send(result.rows))
-    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.code}`));
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.code}`))
+    .finally(() => res.end());
 });
