@@ -39,9 +39,11 @@ const doAll = () => Product.sync()
 
 const getShop = (id) => Product.findAll({ where: { shopID: id } });
 const get8 = (id) => Product.findAll({ attributes: ['productName', 'productPrice', 'productShipping', 'productURL'], where: { shopID: id } });
+const getSuggested = (id) => Product.findAll({ attributes: ['shopName', 'productName', 'productPrice', 'productShipping', 'productURL'], where: { shopID: id } });
 
 module.exports = {
   doAll,
   getShop,
   get8,
+  getSuggested,
 };
