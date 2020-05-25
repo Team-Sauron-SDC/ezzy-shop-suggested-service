@@ -24,7 +24,14 @@ app.get('/products/:id', (req, res) => {
     .then((result) => {
       data = data.concat([result]);
       res.send(data);
-      res.end();
     })
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
+    .finally(() => res.end);
+});
+
+app.get('/get/random', (req, res) => {
+  const suggested = Array.from({ length: 6 }, () => Math.floor(Math.random() * 1000));
+  postgres.getSuggested(suggested)
+    .then((result) => res.send(result))
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`));
 });
