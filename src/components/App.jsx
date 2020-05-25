@@ -31,7 +31,6 @@ function App() {
       method: 'GET',
       url: `/products/${id}`,
       success: function(result) {
-        console.log('result: ', result);
         var products = result[0];
         var shops = result[0];
         var randomItems = result[1];
@@ -45,7 +44,7 @@ function App() {
 
   useEffect(() => {
     getRequest();
-  }, [shopInfoData]);
+  }, []);
 
   function updateBasicInfo(products, shops, randomProductItems) {
     updateShopInfoData({

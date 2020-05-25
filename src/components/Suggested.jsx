@@ -12,10 +12,7 @@ function Suggested() {
       method: 'GET',
       url: '/get/random',
       success: function(result) {
-        if (counter === 2) {
-          console.log(result);
-          updateSuggestionItems(result);
-        }
+        updateSuggestionItems(result);
       },
       error: function(err) {
         console.error('There was an error getting suggested items from database: ', err);
@@ -24,20 +21,17 @@ function Suggested() {
   }
 
   useEffect(() => {
-    if (counter === 1) {
-      counter += 1;
-      get();
-    }
-  }, [counter]);
+    get();
+  }, []);
 
-  const suggestedNodes = suggestionItems.map( item => {
+  const suggestedNodes = suggestionItems.map( (item, i) => {
     return (
-      <div className="joseph-suggestedItm">
-        <img src={item.image_url} />
-        <p className="joseph-itemName" >{item.name}</p>
-        <div className="joseph-shopName-small">{item.shop_name}</div>
-        <div className="joseph-price">{item.price}</div>
-        <div className={item.shipping.split(' ').join('')} >{item.shipping}</div>
+      <div className="joseph-suggestedItm" key={i}>
+        <img src={item.productURL} />
+        <p className="joseph-itemName" >{item.productName}</p>
+        <div className="joseph-shopName-small">{item.shopName}</div>
+        <div className="joseph-price">{item.productPrice}</div>
+        <div className={item.productShipping === ' FREE Shipping' ? 'FREEshipping' : 'Freeshippingeligible'}>{item.productShipping}</div>
       </div>
     );
   });

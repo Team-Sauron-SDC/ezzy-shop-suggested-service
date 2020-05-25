@@ -4,9 +4,8 @@ import ReactDOM from 'react-dom';
 function ShopItems({ data }) {
 
   const items = data.map( (item, index) => {
-    if (index < 8) {
       return (
-        <div className="joseph-imgItem">
+        <div className="joseph-imgItem" key={index}>
           <img src={item.productURL} />
           <div className="joseph-textWrapper">
             <p className="joseph-itemName">{item.productName}</p>
@@ -15,7 +14,6 @@ function ShopItems({ data }) {
           </div>
         </div>
       );
-    }
   })
 
   return (
