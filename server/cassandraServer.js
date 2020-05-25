@@ -6,15 +6,32 @@ const app = express();
 const port = 4000;
 
 app.use(express.static(path.join(__dirname, '/dist')));
+app.use('/:id', express.static('dist'));
 app.use(express.json());
 app.listen(`${port}`, () => {
   console.log(`Cassandra Server Listening on ${port}!`);
 });
 
-app.get('/cassandra/:id', (req, res) => {
+app.get('/products/:id', (req, res) => {
   const params = req.params.id;
-  return cassandra.getShop(params)
-    .then((result) => res.send(result.rows[0]))
-    .catch((err) => res.status(500).send('GET ERROR', err))
+  let data;
+  cassandra.getShop(params)
+    .then((result) => {
+      data = result.rows;
+      const random8 = Array.from({ length: 8 }, () => Math.floor(Math.random() * 1000));
+      return cassandra.get8(random8);
+    })
+    .then((result) => {
+      data = data.concat([result.rows]);
+      res.send(data);
+    })
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.code}`))
     .finally(() => res.end());
+});
+
+app.get('/get/random', (req, res) => {
+  const suggested = Array.from({ length: 6 }, () => Math.floor(Math.random() * 1000));
+  cassandra.getSuggested(suggested)
+    .then((result) => res.send(result.rows))
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.code}`));
 });

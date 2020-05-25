@@ -64,6 +64,8 @@ app.get('/get/random', (req, res) => {
   });
 });
 
+// CRUD APIs
+
 app.post('/products/', (req, res) => {
   const params = Object.values(req.body);
   crud.create(params, (err, result) => {

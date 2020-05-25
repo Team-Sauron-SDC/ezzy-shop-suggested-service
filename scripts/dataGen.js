@@ -5,6 +5,11 @@ const start = new Date();
 const writeData = fs.createWriteStream('data.csv');
 writeData.write('shopID, shopName, shopDate, shopSales, shopLoc, shopURL, shopItems, productID, productName, productPrice, productShipping, productURL\n', 'utf8');
 
+const randomImg = () => {
+  const id = Math.floor(Math.random() * 1000);
+  return `https://i.picsum.photos/id/${id}/300/300.jpg`;
+};
+
 const dataGen = (writer, encoding, callback) => {
   let i = 10000000;
   let id = 0;
@@ -24,8 +29,8 @@ const dataGen = (writer, encoding, callback) => {
       const productName = faker.commerce.productName();
       const productPrice = faker.commerce.price();
       const productShipping = faker.random.boolean() ? 'FREE Shipping' : 'Free Shipping Eligible';
-      const productURL = faker.image.cats();
-      const data = `${shopID}, ${shopName}, ${shopDate}, ${shopSales}, ${shopLoc}, ${shopURL}, ${shopItems}, ${productID}, ${productName}, ${productPrice}, ${productShipping}, ${productURL}\n`;
+      const productURL = randomImg();
+      const data = `${shopID},${shopName},${shopDate},${shopSales},${shopLoc},${shopURL},${shopItems},${productID},${productName},${productPrice},${productShipping},${productURL}\n`;
       if (i === 0) {
         writer.write(data, encoding, callback);
       } else {
