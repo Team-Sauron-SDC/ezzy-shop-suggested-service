@@ -1,4 +1,7 @@
 const cassandra = require('cassandra-driver');
+const path = require('path');
+
+const dataPath = path.join(__dirname, 'data.csv');
 
 const tempClient = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'system' });
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
@@ -17,18 +20,14 @@ const connectAndCreate = () => tempClient.connect()
   })
   .catch((err) => console.log('Cannot Connect to Cassandra!', err));
 
-// COPY is a command of the shell cqlsh. COPY does not exist in standard syntax.
-/*
 const save = () => {
-  const query = 'COPY sauron_sdc.products_by_shop ("shopID", "shopName", "shopDate", "shopSales", "shopLoc", "shopURL", "shopItems", "productID", "productName", "productPrice", "productShipping", "productURL") FROM '/home/hieuho/Hack Reactor/sdc/suggested-module/data.csv' WITH header=true AND delimiter=',';';
-  const params = ['/home/hieuho/Hack Reactor/sdc/suggested-module/data.csv', ','];
-  client.execute(query, params);
+  const query = `COPY sauron_sdc.products_by_shop ("shopID", "shopName", "shopDate", "shopSales", "shopLoc", "shopURL", "shopItems", "productID", "productName", "productPrice", "productShipping", "productURL") FROM '${dataPath}' WITH header=true AND delimiter=',';`;
+  client.execute(query);
   console.log('Copy to Cassandra Completed!');
 };
-*/
 
 const doAll = () => connectAndCreate()
-  // .then(() => save())
+  // .then(() => save()) // COPY is a command of the shell cqlsh. COPY does not exist in standard syntax.
   .then(() => console.log('Cassandra ready for actions!'))
   .catch((err) => console.log('Connection or Seeding Error!', err));
 

@@ -1,5 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { Pool } = require('pg');
+const path = require('path');
+
+const dataPath = path.join(__dirname, 'data.csv');
 
 const pgProduct = new Pool({
   user: 'hieuho',
@@ -33,7 +36,7 @@ const Product = sequelize.define('products', {
 }, { timestamps: false });
 
 const doAll = () => Product.sync()
-  .then(() => pgProduct.query("COPY products FROM '/home/hieuho/Hack Reactor/sdc/suggested-module/data.csv' DELIMITER ',' CSV HEADER"))
+  .then(() => pgProduct.query(`COPY products FROM '${dataPath}' DELIMITER ',' CSV HEADER`))
   .then(() => console.log('PostgreSQL ready for actions!'))
   .catch((err) => console.log('Connection or Seeding Error', err));
 
@@ -41,9 +44,16 @@ const getShop = (id) => Product.findAll({ where: { shopID: id } });
 const get8 = (id) => Product.findAll({ attributes: ['productName', 'productPrice', 'productShipping', 'productURL'], where: { shopID: id } });
 const getSuggested = (id) => Product.findAll({ attributes: ['shopName', 'productName', 'productPrice', 'productShipping', 'productURL'], where: { shopID: id } });
 
+const createShop = (product) => Product.create(product);
+const updateShop = (product) => Product.update(product.info, { where: { shopID: product.id } });
+const deleteShop = (id) => Product.destroy({ where: { shopID: id } });
+
 module.exports = {
   doAll,
   getShop,
   get8,
   getSuggested,
+  createShop,
+  updateShop,
+  deleteShop,
 };

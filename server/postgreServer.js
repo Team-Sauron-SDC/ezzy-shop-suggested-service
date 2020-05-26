@@ -26,12 +26,38 @@ app.get('/products/:id', (req, res) => {
       res.send(data);
     })
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
-    .finally(() => res.end);
+    .finally(() => res.end());
 });
 
 app.get('/get/random', (req, res) => {
   const suggested = Array.from({ length: 6 }, () => Math.floor(Math.random() * 1000));
   postgres.getSuggested(suggested)
     .then((result) => res.send(result))
-    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`));
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
+    .finally(() => res.end());
+});
+
+app.post('/products/:id', (req, res) => {
+  const newShop = res.body;
+  postgres.createShop(newShop)
+    .then((result) => res.send(result))
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
+    .finally(() => res.end());
+});
+
+app.patch('/products/:id', (req, res) => {
+  const { shopID, ...rest } = req.body;
+  const params = { info: rest, id: req.body.shopID };
+  postgres.updateShop(params)
+    .then((result) => res.send(result))
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
+    .finally(() => res.end());
+});
+
+app.delete('/products/:id', (req, res) => {
+  const params = req.params.id;
+  postgres.deleteShop(params)
+    .then((result) => res.send(result))
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
+    .finally(() => res.end());
 });
