@@ -18,6 +18,12 @@ config:
       rampTo: 100
       maxVusers: 100
       name: "100 users for 3 minutes"
+    - pause: 30
+    - duration: 180
+      arrivalRate: 100
+      rampTo: 1000
+      maxVusers: 1000
+      name: "1000 users for 3 minutes"
 scenarios:
   - name: "Get suggested"
     weight: 70
