@@ -13,16 +13,16 @@ const randomImg = () => {
 
 const randomDataGen = (userContext, events, done) => {
   const shopID = faker.random.number({ min: 10000001, max: 200000000 });
-  const shopName = faker.company.companyName(0);
+  const shopName = 'HieuTest';
   const shopDate = faker.date.recent().toString();
-  const shopSales = faker.random.number(50000);
-  const shopLoc = faker.address.city();
+  const shopSales = 42;
+  const shopLoc = 'Neo-Tokyo';
   const shopURL = faker.image.avatar();
-  const shopItems = faker.random.number(1000);
+  const shopItems = 99;
   const productID = shopID;
-  const productName = faker.commerce.productName();
-  const productPrice = faker.commerce.price();
-  const productShipping = faker.random.boolean() ? 'FREE Shipping' : 'Free Shipping Eligible';
+  const productName = 'Bubbles';
+  const productPrice = '2.99';
+  const productShipping = 'FREE Shipping';
   const productURL = randomImg();
 
   userContext.vars.shopID = shopID;

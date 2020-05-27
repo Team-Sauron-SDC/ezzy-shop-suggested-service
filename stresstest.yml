@@ -4,15 +4,19 @@ config:
   phases:
     - duration: 180
       arrivalRate: 1
+      maxVusers: 1
       name: "1 user for 3 minutes / warm up the application"
     - pause: 30
     - duration: 180
       arrivalRate: 1
       rampTo: 10
+      maxVusers: 10
       name: "10 users for 3 minutes"
+    - pause: 30
     - duration: 180
       arrivalRate: 10
       rampTo: 100
+      maxVusers: 100
       name: "100 users for 3 minutes"
 scenarios:
   - name: "Get suggested"
