@@ -36,3 +36,16 @@ app.get('/get/random', (req, res) => {
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.code}`))
     .finally(() => res.end());
 });
+
+app.post('/products/:id', (req, res) => {
+  const params = Object.values(req.body);
+  params.splice(0, 1, parseInt(params[0]));
+  params.splice(3, 1, parseInt(params[3]));
+  params.splice(6, 1, parseInt(params[6]));
+  params.splice(7, 1, parseInt(params[7]));
+  console.log('params: ', params);
+  cassandra.create(params)
+    .then((result) => res.send(result.rows))
+    .catch((err) => res.status(500).send(err))
+    .finally(() => res.end());
+});
