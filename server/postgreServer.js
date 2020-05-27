@@ -39,7 +39,7 @@ app.get('/get/random', (req, res) => {
 });
 
 app.post('/products/:id', (req, res) => {
-  const newShop = res.body;
+  const newShop = req.body;
   postgres.createShop(newShop)
     .then((result) => res.send(result))
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))

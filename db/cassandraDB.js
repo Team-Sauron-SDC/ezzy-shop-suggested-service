@@ -39,9 +39,13 @@ const get8 = (id) => client.execute(`SELECT "productName", "productPrice", "prod
 
 const getSuggested = (id) => client.execute(`SELECT "shopName", "productName", "productPrice", "productShipping", "productURL" FROM sauron_sdc.products_by_shop WHERE "shopID" IN (${id})`);
 
+const createShop = (data) => client.execute(`INSERT INTO sauron_sdc.products_by_shop ("shopID", "shopName", "shopDate", "shopSales", "shopLoc", "shopURL", "shopItems", "productID", "productName", "productPrice", "productShipping", "productURL") VALUES (${data[0]}, '${data[1]}', '${data[2]}', ${data[3]}, '${data[4]}', '${data[5]}', ${data[6]}, ${data[7]}, '${data[8]}', '${data[9]}', '${data[10]}', '${data[11]}')`);
+
+
 module.exports = {
   doAll,
   getShop,
   get8,
   getSuggested,
+  createShop,
 };
