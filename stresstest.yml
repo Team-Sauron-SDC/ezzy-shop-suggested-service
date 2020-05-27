@@ -1,23 +1,40 @@
 config:
-  processor: './stresstest.js'
-  target: 'http://localhost:4000'
+  processor: "./stressGen.js"
+  target: "http://localhost:4000"
   phases:
-    - duration: 180
+    - duration: 10
       arrivalRate: 1
-      name: '1 user for 3 minutes / warm up the application'
+      name: "1 user for 3 minutes / warm up the application"
     # - pause: 30
     # - duration: 180
     #   arrivalRate: 1
     #   rampTo: 10
-    #   name: '10 users for 3 minutes'
+    #   name: "10 users for 3 minutes"
     # - duration: 180
     #   arrivalRate: 10
     #   rampTo: 100
-    #   name: '100 users for 3 minutes'
+    #   name: "100 users for 3 minutes"
 scenarios:
-  - name: 'Get suggested'
+  - name: "Get suggested"
     flow:
-      - function: 'getRandomPage'
+      - function: "getRandomPage"
       - get:
-        url: /products/{{id}}
-      - log: 'Current page is set to: {{id}}'
+          url: '/products/{{id}}'
+  - name: "Post suggested"
+    flow:
+      - function: "randomDataGen"
+      - post:
+          url: "/products/:id"
+          json:
+            shopID: "{{shopID}}"
+            shopName: "{{shopName}}"
+            shopDate: "{{shopDate}}"
+            shopSales: "{{shopSales}}"
+            shopLoc: "{{shopLoc}}"
+            shopURL: "{{shopURL}}"
+            shopItems: "{{shopItems}}"
+            productID: "{{productID}}"
+            productName: "{{productName}}"
+            productPrice: "{{productPrice}}"
+            productShipping: "{{productShipping}}"
+            productURL: "{{productURL}}"
