@@ -42,4 +42,5 @@ const randomDataGen = (userContext, events, done) => {
 };
 module.exports = {
   getRandomPage,
+  randomDataGen,
 };
