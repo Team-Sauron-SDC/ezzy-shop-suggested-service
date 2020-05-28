@@ -18,6 +18,7 @@ const sequelize = new Sequelize('mydb', 'hieuho', 'pass', {
   define: {
     freezeTableName: true,
   },
+  logging: false,
 });
 
 const Product = sequelize.define('products', {
