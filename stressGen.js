@@ -12,7 +12,7 @@ const randomImg = () => {
 };
 
 const randomDataGen = (userContext, events, done) => {
-  const shopID = faker.random.number({ min: 10000001, max: 200000000 });
+  const shopID = faker.random.number({ min: 10000001, max: 20000000 });
   const shopName = 'HieuTest';
   const shopDate = faker.date.recent().toString();
   const shopSales = 42;
