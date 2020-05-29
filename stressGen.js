@@ -1,7 +1,7 @@
 const faker = require('faker');
 
 const getRandomPage = (userContext, events, done) => {
-  const id = faker.random.number({ min: 1, max: 10000000 });
+  const id = faker.random.number({ min: 9000000, max: 10000000 });
   userContext.vars.id = id;
   return done();
 };

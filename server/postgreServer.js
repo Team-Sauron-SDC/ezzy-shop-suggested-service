@@ -18,13 +18,11 @@ app.get('/products/:id', (req, res) => {
   let data;
   postgres.getShop(params)
     .then((result) => {
-      data = result;
       const random8 = Array.from({ length: 8 }, () => Math.floor(Math.random() * 1000));
-      return postgres.get8(random8);
+      return result + postgres.get8(random8);
     })
     .then((result) => {
-      data = data.concat([result]);
-      res.send(data);
+      res.send(result);
     })
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
     .finally(() => res.end());

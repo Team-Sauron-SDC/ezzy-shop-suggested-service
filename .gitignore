@@ -3,3 +3,4 @@ node_modules
 /dist/bundle.js
 data.csv
 newrelic_agent*
+artillery_*
