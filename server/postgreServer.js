@@ -6,6 +6,10 @@ const postgres = require('../db/postgreSQL');
 const app = express();
 const port = 4000;
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.use(express.static(path.join(__dirname, '/dist')));
 app.use('/:id', express.static('dist'));
 app.use(express.json());

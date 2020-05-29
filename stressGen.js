@@ -1,7 +1,7 @@
 const faker = require('faker');
 
 const getRandomPage = (userContext, events, done) => {
-  const id = faker.random.number({ min: 1, max: 10000000 });
+  const id = faker.random.number({ min: 9000000, max: 10000000 });
   userContext.vars.id = id;
   return done();
 };
@@ -14,7 +14,7 @@ const randomImg = () => {
 const randomDataGen = (userContext, events, done) => {
   const shopID = faker.random.number({ min: 10000001, max: 200000000 });
   const shopName = 'HieuTest';
-  const shopDate = faker.date.recent().toString();
+  const shopDate = 'May 22, 1995';
   const shopSales = 42;
   const shopLoc = 'Neo-Tokyo';
   const shopURL = faker.image.avatar();

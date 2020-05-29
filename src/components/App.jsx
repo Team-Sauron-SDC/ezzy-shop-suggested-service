@@ -4,6 +4,7 @@ import ShopInfo from './ShopInfo.jsx';
 import ShopItems from './ShopItems.jsx';
 import Suggested from './Suggested.jsx';
 import Footer from './Footer.jsx';
+import $ from 'jquery';
 
 function App() {
 
