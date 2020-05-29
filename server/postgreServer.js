@@ -6,6 +6,10 @@ const postgres = require('../db/postgreSQL');
 const app = express();
 const port = 4000;
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.use(express.static(path.join(__dirname, '/dist')));
 app.use('/:id', express.static('dist'));
 app.use(express.json());
@@ -18,11 +22,13 @@ app.get('/products/:id', (req, res) => {
   let data;
   postgres.getShop(params)
     .then((result) => {
+      data = result;
       const random8 = Array.from({ length: 8 }, () => Math.floor(Math.random() * 1000));
-      return result + postgres.get8(random8);
+      return postgres.get8(random8);
     })
     .then((result) => {
-      res.send(result);
+      data = data.concat([result]);
+      res.send(data);
     })
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
     .finally(() => res.end());
