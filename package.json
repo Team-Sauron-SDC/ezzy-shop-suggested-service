@@ -7,7 +7,8 @@
     "build": "webpack --config webpack.config.js -w",
     "populate": "node scripts/script.js",
     "test": "jest",
-    "start": "node server/index.js"
+    "start": "node server/postgreServer.js",
+    "startdev": "nodemon server/postgreServer.js"
   },
   "repository": {
     "type": "git",
