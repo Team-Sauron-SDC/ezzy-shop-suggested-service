@@ -1,19 +1,20 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { Pool } = require('pg');
 const path = require('path');
+require('dotenv').config();
 
 const dataPath = path.join(__dirname, 'data.csv');
 
 const pgProduct = new Pool({
-  user: 'hieuho',
-  host: 'localhost',
-  database: 'mydb',
-  password: 'pass',
-  port: 5432,
+  user: process.env.POST_USER,
+  host: process.env.POST_HOST,
+  database: process.env.POST_DB,
+  password: process.env.POST_PASS,
+  port: process.env.POST_PORT,
 });
 
-const sequelize = new Sequelize('mydb', 'hieuho', 'pass', {
-  host: 'localhost',
+const sequelize = new Sequelize(process.env.POST_DB, process.env.POST_USER, process.env.POST_PASS, {
+  host: process.env.POST_HOST,
   dialect: 'postgres',
   define: {
     freezeTableName: true,
