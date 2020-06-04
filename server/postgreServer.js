@@ -1,12 +1,14 @@
 const nr = require('newrelic');
 const express = require('express');
 const path = require('path');
+const compression = require('compression');
 // const fs = require('fs');
 // const React = require('react');
 // const ReactDOMServer = require('react-dom/server');
+
+const router = require('./template');
 const postgres = require('../db/postgreSQL');
 // const App = require('../src/components/App.jsx');
-const router = require('./template');
 
 const app = express();
 const port = 4000;
@@ -22,6 +24,7 @@ const port = 4000;
 //       `<div id="suggested">${ReactDOMServer.renderToString(<App />)}</div>`))
 //   }));
 // });
+app.use(compression());
 app.use('/', router);
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
