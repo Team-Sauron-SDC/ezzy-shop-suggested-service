@@ -9,7 +9,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['SDC Shmetsy'],
+  app_name: ['SDC Shmetsy Service'],
   /**
    * Your New Relic license key.
    */
