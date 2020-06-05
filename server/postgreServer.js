@@ -31,8 +31,8 @@ app.get('/products/:id', (req, res) => {
   const params = req.params.id.split(',').map(Number);
   let data;
   redis.getProducts(`product${params}`, (err, docs) => {
-    if (err) throw err;
-    if (data !== null) {
+    if (err) res.status(500).send(`There was an error: ${err}`);
+    if (docs !== null) {
       const result = JSON.parse(docs);
       res.send(result);
       res.end();
