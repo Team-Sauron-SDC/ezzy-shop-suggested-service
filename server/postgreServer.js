@@ -12,7 +12,11 @@ app.use(compression());
 app.use('/', router);
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.set('Cache-Control', 'public, max-age=31536000');
+  if (req.method === 'GET') {
+    res.set('Cache-Control', 'public, max-age=31536000');
+  } else {
+    res.set('Cache-Control', 'no-store, no-cache, max-age=0');
+  }
   next();
 });
 app.use(express.static(path.join(__dirname, '/dist')));
@@ -33,7 +37,6 @@ app.get('/products/:id', (req, res) => {
     })
     .then((result) => {
       data = data.concat([result]);
-      res.set('Cache-Control', 'public, max-age=31536000');
       res.send(data);
     })
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
@@ -43,10 +46,7 @@ app.get('/products/:id', (req, res) => {
 app.get('/get/random', (req, res) => {
   const suggested = Array.from({ length: 6 }, () => Math.floor(Math.random() * 1000));
   postgres.getSuggested(suggested)
-    .then((result) => {
-      res.set('Cache-Control', 'public, max-age=31536000');
-      res.send(result);
-    })
+    .then((result) => res.send(result))
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
     .finally(() => res.end());
 });
