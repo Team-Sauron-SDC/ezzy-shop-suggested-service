@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index.jsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: "bundle.js"
+    filename: 'bundle.js',
   },
   module: {
     rules: [
@@ -16,14 +16,14 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-object-rest-spread']
-          }
-        }
+            plugins: ['@babel/plugin-proposal-object-rest-spread'],
+          },
+        },
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"]
-      }
-    ]
-  }
-}
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+};

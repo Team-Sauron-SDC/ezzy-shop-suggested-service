@@ -1,11 +1,15 @@
 const nr = require('newrelic');
 const express = require('express');
 const path = require('path');
+const compression = require('compression');
+const router = require('./template');
 const postgres = require('../db/postgreSQL');
 
 const app = express();
 const port = 4000;
 
+app.use(compression());
+app.use('/', router);
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   next();
