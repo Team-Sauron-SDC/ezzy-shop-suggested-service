@@ -4,6 +4,7 @@ const path = require('path');
 const compression = require('compression');
 const router = require('./template');
 const postgres = require('../db/postgreSQL');
+const redis = require('../db/redisCache');
 
 const app = express();
 const port = 4000;
@@ -29,18 +30,28 @@ app.listen(port, () => {
 app.get('/products/:id', (req, res) => {
   const params = req.params.id.split(',').map(Number);
   let data;
-  postgres.getShop(params)
-    .then((result) => {
-      data = result;
-      const random8 = Array.from({ length: 8 }, () => Math.floor(Math.random() * 1000));
-      return postgres.get8(random8);
-    })
-    .then((result) => {
-      data = data.concat([result]);
-      res.send(data);
-    })
-    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
-    .finally(() => res.end());
+  redis.getProducts(`product${params}`, (err, docs) => {
+    if (err) throw err;
+    if (data !== null) {
+      const result = JSON.parse(docs);
+      res.send(result);
+      res.end();
+    } else {
+      postgres.getShop(params)
+        .then((result) => {
+          data = result;
+          const random8 = Array.from({ length: 8 }, () => Math.floor(Math.random() * 1000));
+          return postgres.get8(random8);
+        })
+        .then((result) => {
+          data = data.concat([result]);
+          redis.insert(`product${params}`, JSON.stringify(data));
+          res.send(data);
+        })
+        .catch((error) => res.status(500).send(`${error.name}. Error Code: ${error.parent.code}`))
+        .finally(() => res.end());
+    }
+  });
 });
 
 app.get('/get/random', (req, res) => {
