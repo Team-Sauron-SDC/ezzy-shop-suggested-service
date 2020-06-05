@@ -12,12 +12,17 @@ app.use(compression());
 app.use('/', router);
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
+  if (req.method === 'GET') {
+    res.set('Cache-Control', 'public, max-age=31536000');
+  } else {
+    res.set('Cache-Control', 'no-store, no-cache, max-age=0');
+  }
   next();
 });
 app.use(express.static(path.join(__dirname, '/dist')));
 app.use('/:id', express.static('dist'));
 app.use(express.json());
-app.listen(`${port}`, () => {
+app.listen(port, () => {
   console.log(`PostgreSQL Server Listening on ${port}!`);
 });
 
