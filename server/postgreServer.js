@@ -2,28 +2,12 @@ const nr = require('newrelic');
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
-// const fs = require('fs');
-// const React = require('react');
-// const ReactDOMServer = require('react-dom/server');
-
 const router = require('./template');
 const postgres = require('../db/postgreSQL');
-// const App = require('../src/components/App.jsx');
 
 const app = express();
 const port = 4000;
 
-// app.use('^/$', (req, res, next) => {
-//   fs.readFile(path.resolve('./dist/index.html', 'utf-8', (err, data) => {
-//     if (err) {
-//       console.log(err);
-//       return res.status(500).send('File Read Error');
-//     }
-//     return res.send(data.replace(
-//       '<div id="suggested"></div>',
-//       `<div id="suggested">${ReactDOMServer.renderToString(<App />)}</div>`))
-//   }));
-// });
 app.use(compression());
 app.use('/', router);
 app.use((req, res, next) => {
