@@ -12,12 +12,13 @@ app.use(compression());
 app.use('/', router);
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
+  res.set('Cache-Control', 'public, max-age=31536000');
   next();
 });
 app.use(express.static(path.join(__dirname, '/dist')));
 app.use('/:id', express.static('dist'));
 app.use(express.json());
-app.listen(`${port}`, () => {
+app.listen(port, () => {
   console.log(`PostgreSQL Server Listening on ${port}!`);
 });
 
@@ -32,6 +33,7 @@ app.get('/products/:id', (req, res) => {
     })
     .then((result) => {
       data = data.concat([result]);
+      res.set('Cache-Control', 'public, max-age=31536000');
       res.send(data);
     })
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
@@ -41,7 +43,10 @@ app.get('/products/:id', (req, res) => {
 app.get('/get/random', (req, res) => {
   const suggested = Array.from({ length: 6 }, () => Math.floor(Math.random() * 1000));
   postgres.getSuggested(suggested)
-    .then((result) => res.send(result))
+    .then((result) => {
+      res.set('Cache-Control', 'public, max-age=31536000');
+      res.send(result);
+    })
     .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
     .finally(() => res.end());
 });
