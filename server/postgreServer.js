@@ -62,6 +62,14 @@ app.get('/get/random', (req, res) => {
     .finally(() => res.end());
 });
 
+app.get('/get/random2', (req, res) => {
+  const suggested = Array.from({ length: 6 }, () => Math.floor(Math.random() * 1000));
+  postgres.getSuggested(suggested)
+    .then((result) => res.send(result))
+    .catch((err) => res.status(500).send(`${err.name}. Error Code: ${err.parent.code}`))
+    .finally(() => res.end());
+});
+
 app.post('/products/:id', (req, res) => {
   const newShop = req.body;
   postgres.createShop(newShop)
