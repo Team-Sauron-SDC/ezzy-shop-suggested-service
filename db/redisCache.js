@@ -3,7 +3,7 @@ const Redis = require('ioredis');
 const client = new Redis();
 
 const insert = (id, data) => {
-  client.set(id, data)
+  client.set(id, data, 'EX', 1800)
     .catch((err) => console.log(err));
 };
 

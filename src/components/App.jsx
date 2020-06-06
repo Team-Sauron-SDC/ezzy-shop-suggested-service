@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ShopInfo from './ShopInfo.jsx';
 import ShopItems from './ShopItems.jsx';
 import Suggested from './Suggested.jsx';
+import Suggested2 from './Suggested2.jsx';
 import Footer from './Footer.jsx';
 import $ from 'jquery';
 
@@ -77,7 +78,7 @@ function App() {
       </div>
       <h1 className="joseph-popular">Popular right now</h1>
       <div className="joseph-suggested">
-        <Suggested />
+        <Suggested2 />
       </div>
       <Footer />
     </div>

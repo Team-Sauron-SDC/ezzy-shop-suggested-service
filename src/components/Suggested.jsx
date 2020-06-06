@@ -4,7 +4,6 @@ import $ from 'jquery';
 
 function Suggested() {
 
-  let counter = 1;
   const [suggestionItems, updateSuggestionItems] = useState([]);
 
   function get() {
