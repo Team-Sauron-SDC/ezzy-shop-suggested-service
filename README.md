@@ -21,6 +21,11 @@ This component renders the current shop information and its products as well as 
 
 > This app contains unique pages from /1 to /10000000. Feel free to check out any pages between then. 
 
+Example:
+```
+http://localhost:4000/1337
+```
+
 ### CRUD Operations
 
 | HTTP Verb |           Endpoint         |            Action            |
