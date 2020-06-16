@@ -1,6 +1,6 @@
-# ShoppR
+# Ezzy Shop
 
-This component renders the current shop information and its products as well as suggest similar products for the ShoppR website.
+This component renders the current shop information and its products as well as suggest similar products for the Ezzy Shop website.
 
 ## Related Projects
 
