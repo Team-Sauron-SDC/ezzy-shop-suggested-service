@@ -2,12 +2,14 @@
 
 This component renders the current shop information and its products as well as suggest similar products for the Ezzy Shop website.
 
+![Ezzy Logo](https://i.imgur.com/skGy7Wf.png)
+
+
 ## Related Projects
 
-  - https://github.com/Team-Sauron-SDC/shmetsy-reviews
-  - https://github.com/Team-Sauron-SDC/shmetsy-suggested-service
-  - https://github.com/Team-Sauron-SDC/Shmetsy-Info-Service
-  - https://github.com/Team-Sauron-SDC/Shmetsy-carousel
+  - [Reviews](https://github.com/Team-Sauron-SDC/shmetsy-reviews)
+  - [Information](https://github.com/Team-Sauron-SDC/Shmetsy-Info-Service)
+  - [Carousel](https://github.com/Team-Sauron-SDC/Shmetsy-carousel)
 
 ## Table of Contents
 
@@ -18,6 +20,15 @@ This component renders the current shop information and its products as well as 
 ## Usage
 
 > This app contains unique pages from /1 to /10000000. Feel free to check out any pages between then. 
+
+### CRUD Operations
+
+| HTTP Verb |           Endpoint         |            Action            |
+|-----------| -------------------------- | ---------------------------- |
+| **POST**  |         /products/         |  CREATE a new item into DB   |
+| **GET**   |       /newproducts/:id     |  READ data and return data   |
+| **PATCH** |       /products/:id        |  UPDATE item with new image  |
+| **DELETE**|       /products/:id        |  DELETE item based on ID     |
 
 ## Requirements
 
@@ -62,16 +73,6 @@ npm run build
 node scripts/dataGen.js
 ```
 ## Development
-
-### CRUD Operations
-
-| HTTP Verb |           Endpoint         |            Action            |
-|-----------| -------------------------- | ---------------------------- |
-| **POST**  |         /products/         |  CREATE a new item into DB   |
-| **GET**   |       /newproducts/:id     |  READ data and return data   |
-| **PATCH** |       /products/:id        |  UPDATE item with new image  |
-| **DELETE**|       /products/:id        |  DELETE item based on ID     |
-
 
 ### Built With
 
