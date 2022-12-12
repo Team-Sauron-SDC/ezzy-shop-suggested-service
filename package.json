@@ -44,7 +44,7 @@
     "compression": "^1.7.4",
     "css-loader": "^3.5.3",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "faker": "^4.1.0",
     "handlebars": "^4.7.6",
     "ignore-styles": "^5.0.1",
